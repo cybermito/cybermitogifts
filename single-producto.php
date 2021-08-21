@@ -6,6 +6,9 @@
     <?php if(have_posts()){
             while(have_posts()){
                 the_post();
+                $taxonomy = get_the_terms(get_the_ID(), 'categoria-productos'); //Tomamos todos los terminos de todas las taxonomías que tiene asignadas el producto. 
+                //Le pasamos el ID del post y segunto le pasamos la taxonomía/categoría que queremos usar solamente. 
+                //Todos los terminos los devuelve en un array. 
             ?>                
                 <div class="row my-5">
                     <div class="col-md-6 col-12">
@@ -24,6 +27,13 @@
                     'order' => 'ASC',
                     'orderby' => 'title',
                     'post__not_in' => array($ID_producto_actual), //Con esto indicamos que en el loop no nos saque el post actual.
+                    'tax_query' => array( //Nos permite decirle que haga la consulta sobre una taxonomía en particular. 
+                        array( // indicamos los atributos que vamos a pasar en la consulta. 
+                            'taxonomy' => 'categoria-productos',
+                            'field' => 'slug',
+                            'terms' => $taxonomy[0]->slug
+                        )
+                    )
                 );
                 /* En la siguiente variable se define el contenido
                 que vamos a solicitar a la base de datos a través del array

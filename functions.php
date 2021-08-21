@@ -28,7 +28,7 @@ function assets(){
 
 add_action('wp_enqueue_scripts','assets');
 
-
+//Registramos un sidebar para poder incorporar los widgets.
 function sidebar(){
     register_sidebar(
         array(
@@ -45,6 +45,7 @@ function sidebar(){
 
 add_action('widgets_init', 'sidebar');
 
+//Registramos un nuevo post-type que va a ser los productos de nuestra web.
 function productos_type(){
     $labels = array(
         'name' => 'Productos',
@@ -71,3 +72,23 @@ function productos_type(){
 }
 
 add_action('init', 'productos_type');
+
+//Registramos una nueva Taxonomía personalizada
+function pgRegisterTax() { //Creamos una función para registrar nuestar nueva taxonomía. 
+    //Creamos una lista de argumentos que nos va permitir registrar dicha taxonomía personalizada. 
+    $args = array(
+        'hierarchical' => true, //Nos permite definir si la categoría pueda tener subcategorías.
+        'labels' => array( //Nombre que va a tener la taxonomía en los distintos puntos del sitio. 
+            'name' => 'Categorías de Productos', //Nombre en plural 
+            'singular name' => 'Categoría de Productos' //Nombre en singular
+        ),
+        'show_in_na_menu' => true, //Queremos que se muestre en el menú de navegación de la web.
+        'show_admin_column' => true, //Queremos que se muestre en el menú de administración (backend)
+        'rewrite' => array( //Nos permite especificar como queremos que se reescriba la ruta de los archivos de categoría de productos. 
+            'slug'=> 'categoria-productos' //poner en formato url.
+        )
+        );
+    register_taxonomy('categoria-productos', array('producto'), $args); //con este comando registramos la taxonomía.
+    //Los atributos que recibe register_taxonomy son (slug, los post-types que le asignamos la taxonomía, los argumentos que recibe).
+}
+add_action('init', 'pgRegisterTax'); //Establecemos el hook en el arranque del sistema.
