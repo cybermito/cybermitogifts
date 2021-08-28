@@ -15,8 +15,12 @@
                         <?php the_post_thumbnail('large'); ?>
                     </div>
                     <div class="col-md-6 col-12">
-                        <?php the_content(); ?>
+                        <!-- Llamamos a la función do_shortcode() para cargar el formulario que hemos creado --> 
+                        <?php echo do_shortcode('[contact-form-7 id="41" title="Formulario de contacto 1"]'); ?> 
                     </div> 
+                    <div class="col-12">
+                        <?php the_content(); ?>
+                    </div>
                 </div>
                 <!-- Creamos el apartado de productos relacionados -->
                 <?php $ID_producto_actual = get_the_ID(); //Obtenemos el ID del post actual?> 
