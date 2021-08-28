@@ -10,7 +10,8 @@ $fields = get_fields(); //Obtenemos en un array todos los campos personalizados 
             while(have_posts()){
                 the_post();?>
                 <img src="<?php echo $fields['imagen']; ?>" alt="Logo representativo sobre nosotros"> 
-                <hr>        
+                <hr> <!-- Esto dibuja una línea de separación entre contenedores, en este caso genera una línea de 
+                sepaación entre el banner y el texto -->     
                 <?php the_content(); ?>
 
          <?php }
